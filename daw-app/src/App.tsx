@@ -8,10 +8,12 @@ import { playbackEngine } from './lib/audio/playback';
 import { audioRecorderEngine } from './lib/audio/record/recorder';
 import { useStore } from './lib/store/useStore';
 import * as Tone from 'tone';
+import { useTranslation } from 'react-i18next';
 
 function App() {
   const [isLandscape, setIsLandscape] = useState(true);
   const { updateTransportPosition, isPlaying } = useStore();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const checkOrientation = () => {
@@ -90,9 +92,9 @@ function App() {
     return (
       <div className="flex h-screen w-full flex-col items-center justify-center bg-zinc-900 text-center p-8">
         <div className="text-4xl mb-4 text-zinc-400">📱➡️💻</div>
-        <h1 className="text-2xl font-bold text-white mb-2">Please Rotate Your Device</h1>
+        <h1 className="text-2xl font-bold text-white mb-2">{t('Please Rotate Your Device')}</h1>
         <p className="text-zinc-400">
-          This application is designed to be used in landscape mode for the best experience.
+          {t('landscape_msg')}
         </p>
       </div>
     );
