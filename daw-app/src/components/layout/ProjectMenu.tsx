@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../../lib/store/useStore';
 import { saveCurrentProject, loadProject, getProjectList } from '../../lib/storage/projectStore';
-import { Save, FolderOpen } from 'lucide-react';
+import { Save, FolderOpen, Globe } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 
 export function ProjectMenu() {
+    const { t, i18n } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [projects, setProjects] = useState<any[]>([]);
     const { name, id } = useStore();
@@ -32,12 +34,17 @@ export function ProjectMenu() {
     const handleNew = () => {
         useStore.setState({
             id: uuidv4(),
-            name: 'New Project',
+            name: t('New Project'),
             tracks: [],
             selectedTrackId: null,
             transportPosition: '0:0:0'
         });
         setIsOpen(false);
+    };
+
+    const toggleLanguage = () => {
+        const nextLang = i18n.language === 'en' ? 'ja' : 'en';
+        i18n.changeLanguage(nextLang);
     };
 
     return (
@@ -46,7 +53,7 @@ export function ProjectMenu() {
                 onClick={() => setIsOpen(!isOpen)}
                 className="font-bold text-lg tracking-tight bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent cursor-pointer hover:opacity-80 transition-opacity"
             >
-                MiniDAW
+                {t('MiniDAW')}
             </button>
 
             {isOpen && (
@@ -57,23 +64,29 @@ export function ProjectMenu() {
                              value={name}
                              onChange={(e) => useStore.setState({ name: e.target.value })}
                              className="w-full bg-zinc-900 border border-zinc-700 rounded px-2 py-1 text-sm text-white focus:outline-none focus:border-blue-500"
-                             placeholder="Project Name"
+                             placeholder={t('Project Name')}
                          />
                     </div>
 
                     <button onClick={handleSave} className="flex items-center px-4 py-2 hover:bg-zinc-700 text-sm text-zinc-200">
-                        <Save size={14} className="mr-2" /> Save Project
+                        <Save size={14} className="mr-2" /> {t('Save Project')}
                     </button>
                     <button onClick={handleNew} className="flex items-center px-4 py-2 hover:bg-zinc-700 text-sm text-zinc-200">
-                        <FolderOpen size={14} className="mr-2" /> New Project
+                        <FolderOpen size={14} className="mr-2" /> {t('New Project')}
                     </button>
 
                     <div className="border-t border-zinc-700 my-2"></div>
-                    <div className="px-4 py-1 text-xs text-zinc-500 font-semibold uppercase">Recent Projects</div>
+
+                    <button onClick={toggleLanguage} className="flex items-center px-4 py-2 hover:bg-zinc-700 text-sm text-zinc-200">
+                        <Globe size={14} className="mr-2" /> {t('Language')}: {i18n.language === 'ja' ? '日本語' : 'English'}
+                    </button>
+
+                    <div className="border-t border-zinc-700 my-2"></div>
+                    <div className="px-4 py-1 text-xs text-zinc-500 font-semibold uppercase">{t('Recent Projects')}</div>
 
                     <div className="max-h-32 overflow-y-auto">
                         {projects.length === 0 ? (
-                            <div className="px-4 py-2 text-xs text-zinc-500 italic">No saved projects found</div>
+                            <div className="px-4 py-2 text-xs text-zinc-500 italic">{t('No saved projects found')}</div>
                         ) : (
                             projects.map(p => (
                                 <button
