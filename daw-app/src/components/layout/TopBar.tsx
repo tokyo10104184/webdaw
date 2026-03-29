@@ -1,12 +1,14 @@
-import { Play, Pause, Square, Circle, Metronome, RotateCcw } from 'lucide-react';
+import { Play, Pause, Square, Circle, Metronome, RotateCcw, Settings } from 'lucide-react';
 import { useState } from 'react';
 import { useStore } from '../../lib/store/useStore';
 import { ProjectMenu } from './ProjectMenu';
 import { exportWav } from '../../lib/audio/export/exporter';
 import { Download } from 'lucide-react';
+import { SettingsDialog } from './SettingsDialog';
 
 export function TopBar() {
   const [isExporting, setIsExporting] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const {
     isPlaying,
     togglePlay,
@@ -111,7 +113,19 @@ export function TopBar() {
         >
           <Download size={20} />
         </button>
+
+        <div className="w-px h-6 bg-zinc-800 mx-2"></div>
+
+        <button
+          onClick={() => setIsSettingsOpen(true)}
+          className="p-2 rounded transition-colors text-zinc-400 hover:bg-zinc-800 hover:text-white"
+          title="Settings"
+        >
+          <Settings size={20} />
+        </button>
       </div>
+
+      <SettingsDialog isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </header>
   );
 }
