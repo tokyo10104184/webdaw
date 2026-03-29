@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../../lib/store/useStore';
 import { saveCurrentProject, loadProject, getProjectList } from '../../lib/storage/projectStore';
-import { Save, FolderOpen, Globe } from 'lucide-react';
+import { Save, FolderOpen } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 
 export function ProjectMenu() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [projects, setProjects] = useState<any[]>([]);
     const { name, id } = useStore();
@@ -42,11 +42,6 @@ export function ProjectMenu() {
         setIsOpen(false);
     };
 
-    const toggleLanguage = () => {
-        const nextLang = i18n.language === 'en' ? 'ja' : 'en';
-        i18n.changeLanguage(nextLang);
-    };
-
     return (
         <div className="relative z-50">
             <button
@@ -73,12 +68,6 @@ export function ProjectMenu() {
                     </button>
                     <button onClick={handleNew} className="flex items-center px-4 py-2 hover:bg-zinc-700 text-sm text-zinc-200">
                         <FolderOpen size={14} className="mr-2" /> {t('New Project')}
-                    </button>
-
-                    <div className="border-t border-zinc-700 my-2"></div>
-
-                    <button onClick={toggleLanguage} className="flex items-center px-4 py-2 hover:bg-zinc-700 text-sm text-zinc-200">
-                        <Globe size={14} className="mr-2" /> {t('Language')}: {i18n.language === 'ja' ? '日本語' : 'English'}
                     </button>
 
                     <div className="border-t border-zinc-700 my-2"></div>

@@ -8,6 +8,9 @@ const resources = {
     translation: {
       // General
       "Language": "Language",
+      "Settings": "Settings",
+      "Switch": "Switch",
+      "Done": "Done",
 
       // ProjectMenu
       "Project Name": "Project Name",
@@ -26,6 +29,9 @@ const resources = {
     translation: {
       // General
       "Language": "言語",
+      "Settings": "設定",
+      "Switch": "切り替え",
+      "Done": "完了",
 
       // ProjectMenu
       "Project Name": "プロジェクト名",
